@@ -1,5 +1,6 @@
 package com.nhs.checkoutApp;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,7 +20,9 @@ public class App
         List<String> itemsPurchase = Arrays.asList(args);  
         int appleCount=0;
         int orangeCount=0;
+        System.out.println("Items:\n");
         for (String e : itemsPurchase) {  
+        	
            System.out.println(e);
            if(e.equalsIgnoreCase("apple")) {
         	   appleCount++;
@@ -28,14 +31,24 @@ public class App
            }
         }
         
-       float totalAmt = checkoutItems(appleCount, orangeCount, false);
-       System.out.println("Total Amount: "+totalAmt);
+       float totalAmt= Float.valueOf(new DecimalFormat("#.##").format(checkoutItems(appleCount, orangeCount, false))); 
+       System.out.println("\nWithout Offer, Total Amount: "+totalAmt);
+       
+       totalAmt= Float.valueOf(new DecimalFormat("#.##").format(checkoutItems(appleCount, orangeCount, true))); 
+       System.out.println("With Offer, Total Amount: "+totalAmt);
     }
 	private static float checkoutItems(int appleCount, int orangeCount, boolean offerAvailable) {
 		// TODO Auto-generated method stub
-		
+		if(offerAvailable==false) {
 		return appleCount*applePrice+orangeCount*orangePrice;
-		
+		}
+		else {
+			
+			return (appleCount/2+appleCount%2)*applePrice+(orangeCount/3*2*orangePrice+orangeCount%3*orangePrice);
+			
+		}
 		
 	}
+	
+	
 }
